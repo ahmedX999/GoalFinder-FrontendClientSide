@@ -12,8 +12,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
-
-
+import Link from 'next/link';
 
 export default function ComplexList() {
 
@@ -114,8 +113,11 @@ export default function ComplexList() {
 
                 </CardContent>
                 <CardActions>
-                  <Button size="small"
-            style={{ backgroundColor: "#E0B0FF", color: "white" }}>Reserve</Button>
+                <Link href={`/fields/${complex.id}`}>
+    <Button size="small" style={{ backgroundColor: "#E0B0FF", color: "white" }}>
+      Reserve
+    </Button>
+  </Link>
                  
                 </CardActions>
               </Card>

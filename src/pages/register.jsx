@@ -1,11 +1,42 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useState } from 'react'
 
 import { AuthLayout } from '@/components/AuthLayout'
 import { Button } from '@/components/Button'
 import { SelectField, TextField } from '@/components/Fields'
 
 export default function Register() {
+  const [formData, setFormData] = useState({
+    name: '',
+    lastname: '',
+    username: '',
+    email: '',
+    password: '',
+  })
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+  const response = await fetch('http://localhost:8080/users/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData),
+  })
+
+  if (response.ok) {
+    // User registered successfully
+    alert('Registration successful! Please log in to continue.')
+    window.location.href = '/login' // Redirect to login page
+  } else {
+    // Handle error response
+  }
+  }
+
   return (
     <>
       <Head>
@@ -23,23 +54,38 @@ export default function Register() {
           </>
         }
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-6">
             <TextField
               label="First name"
-              id="first_name"
-              name="first_name"
+              id="name"
+              name="name"
               type="text"
               autoComplete="given-name"
               required
+              value={formData.name}
+              onChange={handleInputChange}
             />
             <TextField
               label="Last name"
-              id="last_name"
-              name="last_name"
+              id="lastname"
+              name="lastname"
               type="text"
               autoComplete="family-name"
               required
+              value={formData.lastname}
+              onChange={handleInputChange}
+            />
+            <TextField
+              className="col-span-full"
+              label="Username"
+              id="username"
+              name="username"
+              type="text"
+              autoComplete="family-name"
+              required
+              value={formData.username}
+              onChange={handleInputChange}
             />
             <TextField
               className="col-span-full"
@@ -49,6 +95,8 @@ export default function Register() {
               type="email"
               autoComplete="email"
               required
+              value={formData.email}
+              onChange={handleInputChange}
             />
             <TextField
               className="col-span-full"
@@ -56,20 +104,10 @@ export default function Register() {
               id="password"
               name="password"
               type="password"
-              autoComplete="new-password"
               required
+              value={formData.password}
+              onChange={handleInputChange}
             />
-            <SelectField
-              className="col-span-full"
-              label="How did you hear about us?"
-              id="referral-source"
-              name="referral_source"
-            >
-              <option>AltaVista search</option>
-              <option>Super Bowl commercial</option>
-              <option>Our route 34 city bus ad</option>
-              <option>The “Never Use This” podcast</option>
-            </SelectField>
           </div>
           <Button type="submit" color="cyan" className="mt-8 w-full">
             Get started today

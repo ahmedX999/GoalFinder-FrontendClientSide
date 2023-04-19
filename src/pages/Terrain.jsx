@@ -81,7 +81,7 @@ export default function Terrain() {
                     {fields.name}
                   </Typography>
                   <Typography  variant="body1" color="text.secondary">
-                   fields Sportif
+                   Field Sportif
                   </Typography>
                   <hr />
                   <span className="inline-block">
@@ -100,11 +100,11 @@ export default function Terrain() {
                   <br></br>
                   <Typography variant="body2" color="text.secondary">
                   <span className="px-2 py-1 border rounded-full cursor-pointer hover:bg-primary-light">
-                  capacity
+                  nombre de joueures en lobby
                 </span>{fields.capacity}<br></br><br></br>
                 <span className="px-2 py-1 border rounded-full cursor-pointer hover:bg-primary-light">
                   Price
-                </span>{fields.price_perslot}
+                </span>{fields.price_perslot} DH
                   </Typography>
                   <h3 className="text-sm font-medium mt-2 mb-1">Availability</h3>
                   <span className="px-2 py-1 border rounded-full cursor-pointer hover:bg-primary-light">

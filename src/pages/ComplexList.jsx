@@ -114,10 +114,10 @@ export default function ComplexList() {
                 </CardContent>
                 <CardActions>
                 <Link href={`/fields/${complex.id}`}>
-    <Button size="small" style={{ backgroundColor: "#E0B0FF", color: "white" }}>
-      Reserve
-    </Button>
-  </Link>
+                  <Button size="big" style={{ backgroundColor: "#E0B0FF", color: "white" }}>
+                     Consulter
+                  </Button>
+                </Link>
                  
                 </CardActions>
               </Card>

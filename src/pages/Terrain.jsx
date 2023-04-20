@@ -12,40 +12,112 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Pagination from '@mui/material/Pagination';
+//import Modal from '@mui/material/Modal';
+import axios from 'axios';
+import { FiX } from 'react-icons/fi';
+
+import Modal  from 'react-modal';
+//import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 
 export default function Terrain() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [reservations, setReservations] = useState({
+    reservationDate: "",
+    reservationTime: "",
+    numberOfPlayers: 0
+  });
 
-
-
-
-  const [fields, setfields] = useState([]);
+  const [fields, setFields] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const fieldsPerPage = 3;
 
   useEffect(() => {
-    fetch('http://localhost:8080/fields/all')
-      .then(response => response.json())
-      .then(data => {
-        setfields(data);
-      });
+    fetchFields();
+    fetchReservations();
   }, []);
 
-  const filteredfields = fields.filter(fields =>
-    fields.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const fetchFields = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/fields/all');
+      setFields(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchReservations = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/reservations/all');
+      setReservations(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const AddReservation = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/reservations/save', reservations);
+      setReservations({
+        reservationDate: "",
+        reservationTime: "",
+        numberOfPlayers: 0
+      });
+      setIsOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleReservationDateChange = (event) => {
+    setReservations({
+      ...reservations,
+      reservationDate: event.target.value
+    });
+  };
+
+  const handleReservationTimeChange = (event) => {
+    setReservations({
+      ...reservations,
+      reservationTime: event.target.value
+    });
+  };
+
+  const handleNumberOfPlayersChange = (event) => {
+    setReservations({
+      ...reservations,
+      numberOfPlayers: event.target.value
+    });
+  };
+
+  const handleReservationTotalChange = (event) => {
+    setReservations({
+      ...reservations,
+      totalPrice: event.target.value
+    });
+  }
+
+  const filteredFields = fields.filter((field) =>
+    field.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const indexOfLastfields = currentPage * fieldsPerPage;
-  const indexOfFirstfields = indexOfLastfields - fieldsPerPage;
-  const currentfields = filteredfields.slice(indexOfFirstfields, indexOfLastfields);
+  const indexOfLastFields = currentPage * fieldsPerPage;
+  const indexOfFirstFields = indexOfLastFields - fieldsPerPage;
+  const currentFields = filteredFields.slice(indexOfFirstFields, indexOfLastFields);
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
 
- 
+  const CloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const OpenModal = () => {
+    setIsOpen(true);
+  };
 
   return (
     <>
@@ -67,7 +139,7 @@ export default function Terrain() {
         
           <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: "20px" }}>
         
-            {currentfields.map(fields => (
+            {currentFields.map(fields => (
              
               <Card key={fields.id} sx={{ maxWidth: 345 }}>
                 <CardMedia
@@ -76,6 +148,48 @@ export default function Terrain() {
                   height="140"
                   image={fields.photo}
                 />
+
+
+ <Modal isOpen={isOpen} onRequestClose={CloseModal} iaHideApp={false} >
+  <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+      <div class="modal-content py-4 text-left px-6">
+        <div class="modal-header flex justify-between items-center pb-3">
+          <h5 class="text-2xl font-bold">Réserver votre place</h5>
+          <button type="button" class="btn-close" onClick={CloseModal}></button>
+        </div>
+        <form onSubmit={AddReservation}>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="block text-gray-700 font-bold mb-2">Date de réservation</label>
+              <input type="date" class="form-control border w-full p-2" value={reservations.reservationDate} onChange={handleReservationDateChange} required />
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 font-bold mb-2">Heure de réservation</label>
+              <input type="time" class="form-control border w-full p-2" value={reservations.reservationTime} onChange={handleReservationTimeChange} required />
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 font-bold mb-2">Nombre de joueurs</label>
+              <input type="number" class="form-control border w-full p-2" value={reservations.numberOfPlayers} onChange={handleNumberOfPlayersChange} required />
+            </div>
+            <div class="mb-3">
+              <label class="block text-gray-700 font-bold mb-2">Total Price</label>
+              <input type="text" class="form-control border w-full p-2" value={reservations.totalPrice} onChange={handleReservationTotalChange} required />
+            </div>
+          </div>
+          <div class="modal-footer flex justify-end pt-4">
+            <button type="submit" class="btn btn-primary mr-2">Réserver</button>
+            <button type="reset" class="btn btn-secondary" onClick={CloseModal}>Annuler</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</Modal>
+
+
+
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {fields.name}
@@ -100,7 +214,7 @@ export default function Terrain() {
                   <br></br>
                   <Typography variant="body2" color="text.secondary">
                   <span className="px-2 py-1 border rounded-full cursor-pointer hover:bg-primary-light">
-                  nombre de joueures en lobby
+                  nombre de joueurs en lobby
                 </span>{fields.capacity}<br></br><br></br>
                 <span className="px-2 py-1 border rounded-full cursor-pointer hover:bg-primary-light">
                   Price
@@ -121,14 +235,14 @@ export default function Terrain() {
                 </CardContent>
                 <CardActions>
                   <Button size="small"
-            style={{ backgroundColor: "#E0B0FF", color: "white" }}>Reserve</Button>
+            style={{ backgroundColor: "#E0B0FF", color: "white" }}  onClick={() => OpenModal()} >Reserve</Button>
                  
                 </CardActions>
               </Card>
             ))}
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: "20px" }}>
-            <Pagination count={Math.ceil(filteredfields.length / fieldsPerPage)} page={currentPage} onChange={handlePageChange} />
+            <Pagination count={Math.ceil(filteredFields.length / fieldsPerPage)} page={currentPage} onChange={handlePageChange} />
           </Box>
         </Box>
       </Container>

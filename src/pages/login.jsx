@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { AuthLayout } from '@/components/AuthLayout'
 import { Button } from '@/components/Button'
 import { TextField } from '@/components/Fields'
-
+import { useSession, signIn, signOut } from 'next-auth/react';
 export default function Login() {
+const {  data: session } = useSession();
+  console.log(session);
   return (
     <>
       <Head>
@@ -45,8 +47,13 @@ export default function Login() {
           <Button type="submit" color="cyan" className="mt-8 w-full">
             Sign in to account
           </Button>
+     
         </form>
+        <Button color="red" className="mt-8 w-full" onClick={() => signIn()}>
+           Sign in with google
+          </Button>
       </AuthLayout>
+     
     </>
   )
 }

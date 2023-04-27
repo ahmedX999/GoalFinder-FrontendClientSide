@@ -6,6 +6,7 @@ import { Button } from '@/components/Button'
 import { Container } from '@/components/Container'
 import { Logo } from '@/components/Logo'
 import { NavLinks } from '@/components/NavLinks'
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 function MenuIcon(props) {
   return (
@@ -46,13 +47,18 @@ function MobileNavLink({ children, ...props }) {
 }
 
 export function Header() {
+  const {  data: session } = useSession();
   return (
     <header>
+      
       <nav>
         <Container className="relative z-50 flex justify-between py-8">
           <div className="relative z-10 flex items-center gap-16">
+
+            
             <Link href="/" aria-label="Home">
-              <Logo className="h-10 w-auto" />
+            <img src="https://trello.com/1/cards/64171f54f584748c119a6c98/attachments/64171f9fec5e367ecec5853b/previews/64171fa0ec5e367ecec58547/download/logo2_PFA_1.png" alt="" style={{ height: '40px' }} />
+
             </Link>
             <div className="hidden lg:flex lg:gap-10">
               <NavLinks />
@@ -112,7 +118,7 @@ export function Header() {
                           <div className="mt-8 flex flex-col gap-4">
                             <Button href="/login" variant="outline">
                               Log in
-                            </Button>
+                            </Button>               
                             <Button href="#">Download the app</Button>
                           </div>
                         </Popover.Panel>
@@ -122,12 +128,25 @@ export function Header() {
                 </>
               )}
             </Popover>
-            <Button href="/login" variant="outline" className="hidden lg:block">
-              Log in
-            </Button>
+            {session ? (
+  <>
+    <img src={session?.user?.image} alt="" style={{ height: '40px', width: '40px', borderRadius: '50%' }} />
+    <Button variant="outline" className="hidden lg:block">
+      Welcome, {session?.user?.name}
+    </Button>
+  </>
+) : (
+  <Button href="/login" className="hidden lg:block">
+    Log in
+  </Button>
+)}
+
+            
+           
             <Button href="#" className="hidden lg:block">
               Download
             </Button>
+
           </div>
         </Container>
       </nav>

@@ -2,7 +2,10 @@ import { Header } from '@/components/Header'
 import Head from 'next/head'
 import React, { useState, useEffect } from 'react'; 
 import axios from 'axios';
-
+import Button from '@mui/material/Button';
+import PaymentIcon from '@mui/icons-material/Payment';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 export default function ReservationList() {
     const [reservations, setReservations] = useState([]);
   
@@ -13,7 +16,7 @@ export default function ReservationList() {
             }
              catch (error) { console.error(error);}};
 
-
+             const router = useRouter();
   
   return (
     <>
@@ -23,8 +26,10 @@ export default function ReservationList() {
       <Header/>
       <div className='container mx-auto my-8'>
       <div className='h-12'>
-        <h1>List Reservations :</h1>
+        <h1>Reservation List :</h1>
+       
       </div>
+      <hr />
       <div className='flex shadow border-b'>
         <table className='min-w-full'>
             <thead className='bg-blue-50'>
@@ -43,6 +48,9 @@ export default function ReservationList() {
                     </th>
                     <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
                         Total Price
+                    </th>
+                    <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
+                        Action
                     </th>
                     
                 </tr>
@@ -68,6 +76,27 @@ export default function ReservationList() {
                     </td>
                     <td className='text-left px-6 py-4 whitespace-nowrap'>
                         <div className='text-sm text-gray-900'>{reservation.totalPrice}</div>
+                    </td>
+                    <td className='text-left px-6 py-4 whitespace-nowrap'>
+                        <div className='text-sm text-gray-900'>
+                        
+                        <Link href={{
+    pathname: '/Payment',
+    query: {
+        reservationId: reservation.id,
+        totalPrice: reservation.totalPrice
+    }
+}}>
+    <Button
+        variant="contained"
+        color="primary"
+        startIcon={<PaymentIcon />}
+        onClick={() => router.push(`/Payment?reservationId=${reservation.id}&totalPrice=${reservation.totalPrice}`)}
+    >
+        Payment
+    </Button>
+</Link>
+                        </div>
                     </td>
                     
                 </tr>

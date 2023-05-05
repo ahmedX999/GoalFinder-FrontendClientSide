@@ -15,7 +15,6 @@ import Pagination from '@mui/material/Pagination';
 import Link from 'next/link';
 import React from 'react';
 import Map from './Map';
-
 import dynamic from 'next/dynamic';
 
 

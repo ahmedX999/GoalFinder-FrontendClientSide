@@ -23,9 +23,7 @@ const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLa
     ssr: false,
   });
   
-  const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), {
-    ssr: false,
-  });
+
  
 
 

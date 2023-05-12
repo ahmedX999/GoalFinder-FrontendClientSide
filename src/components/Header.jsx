@@ -105,7 +105,7 @@ export function Header() {
                         >
                           <div className="space-y-4">
                             <MobileNavLink href="#features">
-                              Features
+                              Complexes
                             </MobileNavLink>
                             <MobileNavLink href="#reviews">
                               Reviews

@@ -16,6 +16,8 @@ import Link from 'next/link';
 import React from 'react';
 import Map from './Map';
 import dynamic from 'next/dynamic';
+import IconButton from '@mui/material/IconButton';
+
 
 
 
@@ -52,6 +54,27 @@ export default function ComplexList() {
     setCurrentPage(value);
   };
 
+  const [currentPosition, setCurrentPosition] = useState(null);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        setCurrentPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }, []);
+
+  const openMap = () => {
+    const url = 'https://www.google.com/maps/dir//Urban+5,+Qi+azli+lot+industriel+2eme+tranche+lot+n%C2%B0+15+Pr%C3%A8s+de+l\'usine+Coca+cola,+Marrakech+40000/@31.6076232,-8.0571266,14z/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0xdafe94a941672ed:0xde67cdd2a606be45!3e0';
+    window.open(url, '_blank');
+  };
+
  
 
   return (
@@ -77,7 +100,7 @@ export default function ComplexList() {
             {currentComplexes.map(complex => (
 
               <>
-
+            
 
               <Card key={complex.id} sx={{ maxWidth: 345 }}>
                 <CardMedia
@@ -127,6 +150,11 @@ export default function ComplexList() {
                       Consulter
                     </Button>
                   </Link>
+
+                  <IconButton onClick={openMap} size="large">
+                <img height="30" width="30"  src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" alt="Google Maps" />
+                </IconButton>
+
 
                 </CardActions>
               </Card></>

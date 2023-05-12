@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
 
 
+
+
 import('leaflet/dist/leaflet.css')
   .then(() => {
     // Leaflet CSS has been loaded
@@ -22,6 +24,14 @@ const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLa
   const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), {
     ssr: false,
   });
+
+  const Popup = dynamic(() => import('react-leaflet').then((mod) => mod.Popup), {
+    ssr: false,
+  });
+
+
+
+  
   
 
  
@@ -45,6 +55,22 @@ function Map() {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const complexesPerPage = 100;
+  const [currentPosition, setCurrentPosition] = useState(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        setCurrentPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          
+        });
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }, []);
 
  
 
@@ -90,10 +116,13 @@ function Map() {
                     <TileLayer
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution="Map data © <a href='https://openstreetmap.org'>OpenStreetMap</a> contributors" />
-                        {currentComplexes.map(complex => (
-                    <Marker    key={complex.id} position={[complex.laltitude, complex.longitude]} >
-                        <Popup>{complex.name}</Popup>
-                    </Marker>
+                        { currentPosition && currentComplexes.map(complex => (
+                    <><Marker key={complex.id} position={[complex.laltitude, complex.longitude]}>
+                            <Popup>{complex.name}</Popup>
+                          </Marker><Marker position={[currentPosition.lat, currentPosition.lng]}>
+                              <Popup>My Current position</Popup>
+                            </Marker></>
+                  
                     ))}
                 </MapContainer>
             </div></>

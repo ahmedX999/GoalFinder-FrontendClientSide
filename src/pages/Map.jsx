@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 
 
 import { useState, useEffect } from 'react';
-
+import L from 'leaflet';
 
 
 
@@ -117,9 +117,20 @@ function Map() {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         attribution="Map data © <a href='https://openstreetmap.org'>OpenStreetMap</a> contributors" />
                         { currentPosition && currentComplexes.map(complex => (
-                    <><Marker key={complex.id} position={[complex.laltitude, complex.longitude]}>
+                    <><Marker
+                    icon={L.icon({
+                      iconUrl: 'https://cdn-icons-png.flaticon.com/512/919/919431.png', // Replace with the actual URL of the icon
+                      iconSize: [32, 32], // Adjust the size of the icon as per your requirements
+                    })}
+                    key={complex.id} position={[complex.laltitude, complex.longitude]}>
                             <Popup>{complex.name}</Popup>
-                          </Marker><Marker position={[currentPosition.lat, currentPosition.lng]}>
+                          </Marker>
+                          <Marker
+                          icon={L.icon({
+                            iconUrl: 'https://cdn-icons-png.flaticon.com/512/535/535239.png', // Replace with the actual URL of the icon
+                            iconSize: [32, 32], // Adjust the size of the icon as per your requirements
+                          })}
+                          position={[currentPosition.lat, currentPosition.lng]}>
                               <Popup>My Current position</Popup>
                             </Marker></>
                   

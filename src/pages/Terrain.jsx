@@ -150,44 +150,45 @@ export default function Terrain() {
                 />
 
 
- <Modal isOpen={isOpen} onRequestClose={CloseModal} iaHideApp={false} >
-  <div class="modal fixed w-full h-full top-0 left-0 flex items-center justify-center">
-    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
-    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-      <div class="modal-content py-4 text-left px-6">
-        <div class="modal-header flex justify-between items-center pb-3">
-          <h5 class="text-2xl font-bold">Réserver votre place</h5>
-          <button type="button" class="btn-close" onClick={CloseModal}></button>
+ 
+
+<Modal isOpen={isOpen} onRequestClose={CloseModal} iaHideApp={false}>
+  <div className="modal fixed w-full h-full top-0 left-0 d-flex align-items-center justify-content-center">
+    <div className="modal-overlay position-absolute w-100 h-100 bg-dark opacity-50"></div>
+    <div className="modal-container bg-white w-11/12 md-max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+      <div className="modal-content py-4 text-left px-6">
+        <div className="modal-header d-flex justify-content-between align-items-center pb-3">
+          <h5 className="text-2xl font-weight-bold">Réserver votre place</h5>
+          <button type="button" className="btn-close" onClick={CloseModal}></button>
         </div>
         <form onSubmit={AddReservation}>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label class="block text-gray-700 font-bold mb-2">Date de réservation</label>
-              <input type="date" class="form-control border w-full p-2" value={reservations.reservationDate} onChange={handleReservationDateChange} required />
+          <div className="modal-body">
+            <div className="mb-3">
+              <label className="form-label text-gray-700 font-weight-bold">Date de réservation</label>
+              <input type="date" className="form-control border w-100 p-2" value={reservations.reservationDate} onChange={handleReservationDateChange} required />
             </div>
-            <div class="mb-3">
-              <label class="block text-gray-700 font-bold mb-2">Heure de réservation</label>
-              <input type="time" class="form-control border w-full p-2" value={reservations.reservationTime} onChange={handleReservationTimeChange} required />
+            <div className="mb-3">
+              <label className="form-label text-gray-700 font-weight-bold">Heure de réservation</label>
+              <input type="time" className="form-control border w-100 p-2" value={reservations.reservationTime} onChange={handleReservationTimeChange} required />
             </div>
-            <div class="mb-3">
-              <label class="block text-gray-700 font-bold mb-2">Nombre de joueurs</label>
-              <input type="number" class="form-control border w-full p-2" value={reservations.numberOfPlayers} onChange={handleNumberOfPlayersChange} required />
+            <div className="mb-3">
+              <label className="form-label text-gray-700 font-weight-bold">Nombre de joueurs</label>
+              <input type="number" className="form-control border w-100 p-2" value={reservations.numberOfPlayers} onChange={handleNumberOfPlayersChange} required />
             </div>
-            <div class="mb-3">
-              <label class="block text-gray-700 font-bold mb-2">Total Price</label>
-              <input type="text" class="form-control border w-full p-2" value={reservations.totalPrice} onChange={handleReservationTotalChange} required />
+            <div className="mb-3">
+              <label className="form-label text-gray-700 font-weight-bold">Total Price</label>
+              <input type="text" className="form-control border w-100 p-2" value={reservations.totalPrice} onChange={handleReservationTotalChange} required />
             </div>
           </div>
-          <div class="modal-footer flex justify-end pt-4">
-            <button type="submit" class="btn btn-primary mr-2">Réserver</button>
-            <button type="reset" class="btn btn-secondary" onClick={CloseModal}>Annuler</button>
+          <div className="modal-footer d-flex justify-content-end pt-4">
+            <button type="submit" className="btn btn-primary mr-2">Réserver</button>
+            <button type="reset" className="btn btn-secondary" onClick={CloseModal}>Annuler</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </Modal>
-
 
 
                 <CardContent>

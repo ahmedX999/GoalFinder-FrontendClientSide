@@ -49,7 +49,7 @@ export function AppScreen({ children, className, ...props }) {
     <div className={clsx('flex flex-col', className)} {...props}>
       <div className="flex justify-between px-4 pt-4">
         <MenuIcon className="h-6 w-6 flex-none" />
-        <Logo className="h-6 flex-none" />
+        <img src="https://trello.com/1/cards/64171f54f584748c119a6c98/attachments/64171fb4cc9e24c7e3b69694/previews/64171fb4cc9e24c7e3b69702/download/logo2_PFA_4.png" alt="" style={{ height: '40px' }} />
         <UserIcon className="h-6 w-6 flex-none" />
       </div>
       {children}

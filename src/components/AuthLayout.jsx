@@ -24,7 +24,7 @@ export function AuthLayout({ title, subtitle, children }) {
     <main className="flex min-h-full overflow-hidden pt-16 sm:py-28">
       <div className="mx-auto flex w-full max-w-2xl flex-col px-4 sm:px-6">
         <Link href="/" aria-label="Home">
-          <Logo className="mx-auto h-10 w-auto" />
+        <img src="https://trello.com/1/cards/64171f54f584748c119a6c98/attachments/64171f9fec5e367ecec5853b/previews/64171fa0ec5e367ecec58547/download/logo2_PFA_1.png" alt="" style={{ height: '40px' , marginLeft:'220px' }} />
         </Link>
         <div className="relative mt-12 sm:mt-16">
           <BackgroundIllustration

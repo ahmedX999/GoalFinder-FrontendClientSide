@@ -27,10 +27,11 @@ export function Footer() {
         <div className="flex flex-col items-start justify-between gap-y-12 pb-6 pt-16 lg:flex-row lg:items-center lg:py-16">
           <div>
             <div className="flex items-center text-gray-900">
-              <Logomark className="h-10 w-10 flex-none fill-cyan-500" />
+            <img src="https://trello.com/1/cards/64171f54f584748c119a6c98/attachments/64171f9fec5e367ecec5853b/previews/64171fa0ec5e367ecec58547/download/logo2_PFA_1.png" alt="" style={{ height: '40px' }} />
+
               <div className="ml-4">
-                <p className="text-base font-semibold">Pocket</p>
-                <p className="mt-1 text-sm">Invest at the perfect time.</p>
+                <p className="text-base font-semibold">GoalFinder</p>
+                <p className="mt-1 text-sm">Play at the perfect time.</p>
               </div>
             </div>
             <nav className="mt-11 flex gap-8">
